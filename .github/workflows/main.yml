@@ -1,0 +1,24 @@
+name: Apidog API Tests
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  api-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install Apidog CLI
+        run: npm install -g apidog-cli
+
+      - name: Run API Tests
+        run: apidog run --access-token ${{ secrets.APIDOG_ACCESS_TOKEN }} -t 1847143 -e 6390598 -n 1 -r cli
