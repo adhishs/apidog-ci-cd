@@ -14,7 +14,7 @@ jobs:
       with:
         node-version: '14'
 
-    - name: Install Apidog CLI
+    - name: Install Apidog CLI 
       run: npm install -g apidog-cli
 
     - name: Running Test Scenario
