@@ -25,12 +25,11 @@ jobs:
       uses: dawidd6/action-send-mail@v3
       with:
         server_address: smtp.office365.com
-        server_port: 587
-        username: ${{ secrets.EMAIL_USERNAME }}
-        password: ${{ secrets.EMAIL_PASSWORD }}
-        subject: "API Tests - ${{ needs.build.result == 'success' && 'PASSED' || 'FAILED' }}"
-        to: adhish.srinivasan@mavens-i.com
-        from: adhish.srinivasan@mavens-i.com
+server_port: 587
+username: ${{ secrets.EMAIL_USERNAME }}
+password: ${{ secrets.EMAIL_PASSWORD }}
+to: adhish.srinivasan@mavens-i.com
+from: adhish.srinivasan@mavens-i.com
         body: |
           Pipeline Status: ${{ needs.build.result == 'success' && 'PASSED' || 'FAILED' }}
           Repository: ${{ github.repository }}
