@@ -35,7 +35,7 @@ jobs:
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
           subject: "API Tests - ${{ needs.build.result == 'success' && 'PASSED' || 'FAILED' }}"
-          to: adhishbhuvi14@gmail.com, adhishbhudi14@gmail.com
+          to: adhishbhuvi14@gmail.com, adhishbhudi14@gmail.com, adhish.srinivasan@mavens-i.com
           from: ${{ secrets.EMAIL_USERNAME }}
           body: |
             Pipeline Status: ${{ needs.build.result == 'success' && 'PASSED' || 'FAILED' }}
