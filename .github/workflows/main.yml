@@ -5,17 +5,35 @@ on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v3
-
     - name: Setup Node.js environment
       uses: actions/setup-node@v2
       with:
         node-version: '14'
-
-    - name: Install Apidog CLI 
+    - name: Install Apidog CLI
       run: npm install -g apidog-cli
-
     - name: Running Test Scenario
       run: apidog run --access-token ${{ secrets.APIDOG_ACCESS_TOKEN }} --test-suite 4612 -e 6442626 -r html,cli
+
+  notify:
+    needs: build
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+    - name: Send Email Notification
+      uses: dawidd6/action-send-mail@v3
+      with:
+        server_address: smtp.office365.com
+        server_port: 587
+        username: ${{ secrets.EMAIL_USERNAME }}
+        password: ${{ secrets.EMAIL_PASSWORD }}
+        subject: "API Tests - ${{ needs.build.result == 'success' && 'PASSED' || 'FAILED' }}"
+        to: adhish.srinivasan@mavens-i.com
+        from: adhish.srinivasan@mavens-i.com
+        body: |
+          Pipeline Status: ${{ needs.build.result == 'success' && 'PASSED' || 'FAILED' }}
+          Repository: ${{ github.repository }}
+          Branch: ${{ github.ref_name }}
+          Triggered by: ${{ github.actor }}
+          Commit: ${{ github.sha }}
